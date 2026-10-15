@@ -51,6 +51,16 @@
   /* ---------- Предзагрузка картинок, чтобы переходы были мгновенными ---------- */
   Object.values(SERVICES).forEach((s) => { const i = new Image(); i.decoding = 'async'; i.src = s.img; });
 
+  // Картинки схем «Как это работает» подгружаем в фоне, когда главная уже показана,
+  // чтобы при открытии продукта они были в кэше и появлялись мгновенно.
+  const preloadSteps = () => {
+    const urls = [];
+    Object.values(SERVICES).forEach((s) => s.products.forEach((p) => (p.steps || []).forEach((st) => urls.push(st.img))));
+    urls.forEach((u, i) => setTimeout(() => { const im = new Image(); im.decoding = 'async'; im.src = u; }, i * 40));
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(preloadSteps, { timeout: 1500 });
+  else setTimeout(preloadSteps, 800);
+
   /* ---------- Маршрутизация ---------- */
   function parse(hash) {
     const [sKey, pId] = hash.replace(/^#/, '').split('/');
@@ -160,7 +170,7 @@
   function homeView() {
     const cards = Object.entries(SERVICES).map(([key, s], i) => `
       <button class="card card-${key} rise" data-go="${key}" ${delay(i, 80, 60)}>
-        <img src="${s.img}" alt="" width="900" height="900" decoding="async">
+        <img src="${s.img}" alt="" width="900" height="900" decoding="async" fetchpriority="high">
         <span>${esc(s.title)}</span>
       </button>`).join('');
     return `

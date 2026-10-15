@@ -10,21 +10,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Шрифт грузится в фоне и не задерживает показ страницы -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
   <!-- Картинки главной грузим сразу -->
-  <link rel="preload" as="image" href="img/bot.webp">
-  <link rel="preload" as="image" href="img/site.webp">
-  <link rel="preload" as="image" href="img/crm.webp">
-  <link rel="preload" as="image" href="img/auto.webp">
+  <link rel="preload" as="image" fetchpriority="high" href="img/bot.webp">
+  <link rel="preload" as="image" fetchpriority="high" href="img/site.webp">
+  <link rel="preload" as="image" fetchpriority="high" href="img/crm.webp">
+  <link rel="preload" as="image" fetchpriority="high" href="img/auto.webp">
 
-  <!-- ?v=18 — меняйте цифру после правок, иначе Telegram покажет старую версию из кэша -->
-  <link rel="stylesheet" href="css/style.css?v=18">
+  <!-- ?v=19 — меняйте цифру после правок, иначе Telegram покажет старую версию из кэша -->
+  <link rel="stylesheet" href="css/style.css?v=19">
 </head>
 <body>
   <div id="app"></div>
 
-  <script src="js/data.js?v=18" defer></script>
-  <script src="js/app.js?v=18" defer></script>
+  <script src="js/data.js?v=19" defer></script>
+  <script src="js/app.js?v=19" defer></script>
 </body>
 </html>
